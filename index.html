@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redirect Warning</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <p>Warning: You are about to be redirected!</p>
+        <button id="proceedButton" disabled>Proceed</button>
+    </div>
+
+    <script>
+        let countdown = 13;
+        const proceedButton = $('#proceedButton');
+
+        const updateButtonLabel = () => {
+            if (countdown === 0) {
+                proceedButton.text('Proceed');
+                proceedButton.prop('disabled', false);
+                clearInterval(countdownInterval); // Clear the interval when countdown reaches 0
+            } else {
+                proceedButton.text(`Proceed in ${countdown} seconds`);
+                proceedButton.prop('disabled', true);
+            }
+        };
+
+        const redirectToActualWebsite = () => {
+            if (countdown === 0) {
+                window.location.href = 'https://your-actual-website.com';
+            }
+        };
+
+        updateButtonLabel();
+
+        const countdownInterval = setInterval(() => {
+            countdown--;
+            updateButtonLabel();
+        }, 1000);
+
+        proceedButton.click(redirectToActualWebsite);
+    </script>
+</body>
+</html>
