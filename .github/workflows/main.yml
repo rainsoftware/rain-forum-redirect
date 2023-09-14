@@ -1,0 +1,39 @@
+name: Deploy EJS Templates
+
+on:
+  push:
+    branches:
+      - main # Change to your main branch name if necessary
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: 14 # Adjust the Node.js version as needed
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Build EJS templates
+      run: npm run build # Replace with your build command if necessary
+
+    - name: Deploy to Hosting Service
+      # Add the deployment steps here, such as deploying to a web hosting service or copying files to a server.
+      # For example, if you're using GitHub Pages:
+      run: |
+        mkdir public
+        mv output.html public/index.html
+
+    - name: Deploy to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        deploy_key: ${{ secrets.ACTIONS_DEPLOY_KEY }}
+        publish_dir: ./public
+        publish_branch: gh-pages
